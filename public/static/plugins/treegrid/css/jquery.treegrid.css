@@ -1,0 +1,26 @@
+.treegrid-indent {width:16px; height: 16px; display: inline-block; position: relative;}
+
+.treegrid-expander {width:16px; height: 16px; display: inline-block; position: relative; cursor: pointer;}
+
+.treegrid-expander-expanded{background-image: url(../img/collapse.png); }
+.treegrid-expander-collapsed{background-image: url(../img/expand.png);}
+@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+
+body {
+  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+}
+
+
+
+table.tree {
+  width:100%;
+  border-collapse:collapse;
+}
+
+.tree th, td {
+  text-align:left;
+  padding:5px 10px;
+  border-bottom:1px solid #e5e5e5;
+}
+

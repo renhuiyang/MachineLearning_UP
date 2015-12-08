@@ -1,0 +1,51 @@
+.axis {
+  font-size: 10px;
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+}
+.axis >svg>g>text {
+  fill: #000;
+}
+.axis text {
+  -webkit-transition: fill-opacity 250ms linear;
+  fill: #aaa;
+}
+.axis path {
+  display: none;
+}
+.axis line {
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+.horizon + .horizon {
+  border-top: none;
+}
+.horizon {
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+  position: relative;
+}
+.horizon >canvas {
+  display: block;
+}
+.horizon >.title,
+.horizon >.value {
+  bottom: 0;
+  line-height: 30px;
+  margin: 0 6px;
+  position: absolute;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.horizon >.title {
+  left: 0;
+}
+.horizon >.value {
+  right: 0;
+}
+.rule .line {
+  background: #000;
+  opacity: 0.2;
+  z-index: 2;
+}
