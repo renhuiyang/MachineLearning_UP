@@ -60,20 +60,6 @@ class Application extends Controller {
         processActor!s"Start $filename $targetname"
 
         Ok(views.html.result("wait",targetname))
-
-/*        RawDataTransfer.process(s"/tmp/Upload/$filename",s"/tmp/Upload/$targetname",s"/tmp/Process/$filename",s"/tmp/Process/$targetname")
-
-        Hdfs.put(filename,s"/tmp/Process/$filename")
-        Hdfs.put(targetname,s"/tmp/Process/$targetname")
-
-        MachineLearning.run(filename,targetname,"Result")
-
-        Hdfs.get("Result/part-00000",s"/tmp/Download/result.txt")
-
-        Ok.sendFile(
-          content = new java.io.File(s"/tmp/Download/result.txt"),
-          fileName = _ => "result.txt"
-        )*/
       }.getOrElse{
         Redirect(routes.Application.upload).flashing{
           "error"->"Missing Target file"

@@ -41,7 +41,6 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
   var poll = function(){
      $timeout(
          function(){
-             console.log("calling..."+$scope.count)
              $http.get("/query/banking-batch_notital.csv").then(
                        function(response){
                            $scope.count = response.data;

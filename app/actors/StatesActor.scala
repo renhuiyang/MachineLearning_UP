@@ -22,6 +22,9 @@ class StatesActor extends Actor{
        if(states(str) == "100")
          states -= str
      }
-     case messages("Update",str,percentage)=>states(str)=percentage
+     case messages("Update",str,percentage)=>{
+       println(s"Update $str $percentage")
+       states(str)=percentage
+     }
    }
 }
