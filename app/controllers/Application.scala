@@ -85,7 +85,7 @@ class Application extends Controller {
 
   def query(id:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
-    (statesActor?s"Query $id").mapTo[String].map{percentage=>Ok(percentage)}
+    (statesActor?s"Query /root/$id").mapTo[String].map{percentage=>Ok(percentage)}
   }
 
   def result = Action{
