@@ -41,9 +41,10 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
   var poll = function(){
      $timeout(
          function(){
-             $http.get("/query/banking-batch_notital.csv").then(
-                       function(response){
-                           $scope.count = response.data;
+             console.log("call..."+$scope.count)
+             $http.get("/query/banking-batch_notital.csv").success(
+                       function(data){
+                           $scope.count = data;
                            if($scope.count != "100"){
                                poll()
                            }
@@ -54,6 +55,9 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                            }
                        }
                    )
+                   .error(function(data,status){
+                       poll()
+                   })
              }
          ,1000)
   }
