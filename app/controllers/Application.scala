@@ -89,7 +89,7 @@ class Application extends Controller {
   }
 
   def result = Action{
-    Ok(views.html.result("10",""))
+    Ok(views.html.result("10","banking-batch_notital.csv"))
   }
 
   def download(result:String)=Action{

@@ -42,7 +42,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
      $timeout(
          function(){
              console.log("call..."+$scope.count)
-             $http.get("/query/banking-batch_notital.csv").success(
+             $http.get("/query/"+"@taskname").success(
                        function(data){
                            $scope.count = data;
                            if($scope.count != "100"){
