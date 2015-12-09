@@ -1,7 +1,13 @@
 package controllers
 
+import java.util.concurrent.TimeUnit
+
+import actors.{StatesActor, ProcessActor}
+import akka.actor.{ActorSystem, Props}
+import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import play.api._
+import play.api.libs.concurrent.Akka
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -13,13 +19,22 @@ import com.typesafe.config.ConfigFactory
 
 import play.api.mvc._
 import play.api.libs.ws._
-
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import akka.pattern.ask
 
 class Application extends Controller {
   val conf = ConfigFactory.load()
+  val system = ActorSystem("MachineLearning")
+  val statesActor = system.actorOf(Props[StatesActor],name="mystatesactor")
+  val processActor = system.actorOf(Props(new ProcessActor(statesActor)),name="myprocessactor")
+
 
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
+  }
+
+  def login = Action{
+    Ok(views.html.login("Login"))
   }
 
   val taskForm = Form(
@@ -30,7 +45,7 @@ class Application extends Controller {
   )
 
   def upload = Action{
-    Ok(views.html.upload("Please input training data and target data"))
+    Ok(views.html.upload("root"))
   }
 
   def process = Action(parse.multipartFormData) { request =>
@@ -42,7 +57,11 @@ class Application extends Controller {
         val targetname = target.filename
         target.ref.moveTo(new java.io.File(s"/tmp/Upload/$targetname"))
 
-        RawDataTransfer.process(s"/tmp/Upload/$filename",s"/tmp/Upload/$targetname",s"/tmp/Process/$filename",s"/tmp/Process/$targetname")
+        processActor!s"Start $filename $targetname"
+
+        Ok(views.html.result("wait",targetname))
+
+/*        RawDataTransfer.process(s"/tmp/Upload/$filename",s"/tmp/Upload/$targetname",s"/tmp/Process/$filename",s"/tmp/Process/$targetname")
 
         Hdfs.put(filename,s"/tmp/Process/$filename")
         Hdfs.put(targetname,s"/tmp/Process/$targetname")
@@ -54,7 +73,7 @@ class Application extends Controller {
         Ok.sendFile(
           content = new java.io.File(s"/tmp/Download/result.txt"),
           fileName = _ => "result.txt"
-        )
+        )*/
       }.getOrElse{
         Redirect(routes.Application.upload).flashing{
           "error"->"Missing Target file"
@@ -64,5 +83,33 @@ class Application extends Controller {
       Redirect(routes.Application.upload).flashing(
         "error" -> "Missing Training file")
     }
+  }
+
+  val userForm = Form(
+    tuple(
+      "user" -> text,
+      "pass" -> text
+    )
+  )
+
+/*  def postuser=Action{ request=>
+    val (user, password) = userForm.bindFromRequest.get
+    Ok(views.html.upload("root")).withSession("user"->"root")
+  }*/
+
+  def query(id:String) = Action.async{
+    implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
+    (statesActor?s"Query $id").mapTo[String].map{percentage=>Ok(percentage)}
+  }
+
+  def result = Action{
+    Ok(views.html.result("10",""))
+  }
+
+  def download(result:String)=Action{
+    Ok.sendFile(
+      content = new java.io.File(s"/tmp/Download/$result.txt"),
+      fileName = _ => "result.txt"
+    )
   }
 }

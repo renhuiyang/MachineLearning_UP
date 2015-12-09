@@ -1,0 +1,39 @@
+@(message: String)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Spark Manager | Log in</title>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="@routes.Assets.versioned("static/plugins/loginform/css/loginform.css")">
+</head>
+<body>
+<div>
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h1>Login to Your Account</h1><br>
+            <form action="postuser" enctype="multipart/form-data" method="post">
+                <input type="text" name="user" placeholder="Username">
+                <input type="password" name="pass" placeholder="Password">
+                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+            </form>
+
+            <div class="login-help">
+                <a href="#">Register</a> - <a href="#">Forgot Password</a>
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- jQuery 2.1.4 -->
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/bootstrap-filestyle-1.2.1/js/bootstrap-filestyle.js")"></script>
+</body>
+</html>

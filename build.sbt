@@ -10,7 +10,7 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  "org.apache.hadoop"%"hadoop-client"%"2.7.1",
+  "org.apache.hadoop" % "hadoop-client" % "2.6.0",
   specs2 % Test
 )
 

@@ -1,0 +1,68 @@
+@(pecentage: String,taskname:String)
+<!DOCTYPE html>
+<html>
+<style>
+    .waiting-circles{ padding: 0; display: inline-block;
+    position: relative; width: 60px; height: 60px;}
+    .waiting-circles-element{ margin: 0 4px 0 0; background-color: #e4e4e4;
+    border: solid 1px #f4f4f4;
+    width: 50px; height: 50px; display: inline-block;
+    -moz-border-radius: 20px; -webkit-border-radius: 20px; border-radius: 20px;}
+    .waiting-circles-play-0{ background-color: #9EC45F; }
+    .waiting-circles-play-1{ background-color: #aEd46F; }
+    .waiting-circles-play-2{ background-color: #bEe47F; }
+</style>
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+<div class="modal-dialog">
+    <a ng-href="/download/result" ng-show="done">Result</a>
+    <div class="waiting" id="waiting4" ng-hide="done"></div>
+</div>
+</div>
+
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-litelighter.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-waiting.js")"></script>
+
+<script>
+$('#waiting4').waiting({
+    className: 'waiting-circles',
+    elements: 20,
+    radius: 200,
+    auto: true
+})
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope,$timeout,$http) {
+  $scope.count = "0"
+
+  var poll = function(){
+     $timeout(
+         function(){
+             console.log("calling..."+$scope.count)
+             $http.get("/query/banking_notitle.csv").then(
+                       function(response){
+                           $scope.count = response.data;
+                           if($scope.count != "100"){
+                               poll()
+                           }
+                           else
+                           {
+                               $('#waiting4').waiting('disable');
+                               $scope.done=true;
+                           }
+                       }
+                   )
+             }
+         ,1000)
+  }
+
+  poll()
+
+});
+</script>
+
+</body>
+</html>
