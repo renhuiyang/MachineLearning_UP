@@ -16,9 +16,13 @@
 <body>
 
 <div ng-app="myApp" ng-controller="customersCtrl">
-<div class="modal-dialog">
-    <a ng-href="/download/result" ng-show="done">Result</a>
+<div class="row">
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
+    <a ng-href="/download/result" ng-show="done">@taskname</a>
     <div class="waiting" id="waiting4" ng-hide="done"></div>
+    </div>
+    <div class="col-lg-3"></div>
 </div>
 </div>
 

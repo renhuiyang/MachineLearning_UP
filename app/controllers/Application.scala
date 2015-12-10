@@ -30,7 +30,7 @@ class Application extends Controller {
 
 
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index())
   }
 
   def login = Action{
@@ -71,18 +71,6 @@ class Application extends Controller {
     }
   }
 
-  val userForm = Form(
-    tuple(
-      "user" -> text,
-      "pass" -> text
-    )
-  )
-
-/*  def postuser=Action{ request=>
-    val (user, password) = userForm.bindFromRequest.get
-    Ok(views.html.upload("root")).withSession("user"->"root")
-  }*/
-
   def query(id:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
     (statesActor?s"Query /root/$id").mapTo[String].map{percentage=>Ok(percentage)}
@@ -97,5 +85,14 @@ class Application extends Controller {
       content = new java.io.File(s"/tmp/Download/$result.txt"),
       fileName = _ => "result.txt"
     )
+  }
+
+  def readExitsModel = Action.async{
+    println("readExitsModel called")
+    val result = Future{Hdfs.list("savedModel")}
+    result.map{
+      case array:Array[String] =>Ok(views.html.savedModel(array))
+      case _ => Ok(views.html.savedModel(Array[String]()))
+    }
   }
 }

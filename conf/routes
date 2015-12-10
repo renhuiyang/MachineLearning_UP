@@ -10,6 +10,9 @@ POST    /process                          controllers.Application.process
 GET     /query/:id                        controllers.Application.query(id:String)
 GET     /result                            controllers.Application.result
 GET     /download/:result                 controllers.Application.download(result:String)
+GET     /readExitsModel                   controllers.Application.readExitsModel
+
+#static view
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

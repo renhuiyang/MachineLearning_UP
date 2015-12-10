@@ -29,5 +29,8 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     statesActor!s"Update /root/$targetname 90"
     Hdfs.get("Result/part-00000",s"/tmp/Download/result.txt")
     statesActor!s"Update /root/$targetname 100"
+    Hdfs.del("Result")
+    Hdfs.del(targetname)
+    Hdfs.del(filename)
   }
 }
