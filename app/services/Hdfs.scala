@@ -19,7 +19,7 @@ object Hdfs{
   val sysconf = ConfigFactory.load()
   System.setProperty("HADOOP_USER_NAME",sysconf.getString("hadoop.user.name"))
   val conf = new Configuration()
-  conf.set("fs.defaultFS",sysconf.getString("hadoop.master.uri"))
+  conf.set("fs.defaultFS","hdfs://"+sysconf.getString("hadoop.master.uri"+":9000"))
   val fileSystem = FileSystem.get(conf)
 /*  val hdfsMasterUrl=conf.getString("hadoop.master.uri")+":50070/webhdfs/v1"
   val userInfo="user.name="+conf.getString("hadoop.user.name")
