@@ -15,6 +15,8 @@ GET     /readExitsModel                   controllers.Application.readExitsModel
 POST    /create                           controllers.Application.create
 POST    /predict                          controllers.Application.predict
 
+GET     /createModel                      controllers.Application.createModel
+
 #static view
 
 # Map static resources from the /public folder to the /assets URL path
