@@ -5,8 +5,7 @@
 <body>
 
 <div ng-app="myApp" ng-controller="customersCtrl">
-<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
-    role="dialog" aria-hidden="true" data-backdrop="static">
+<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,6 +24,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
 <script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
@@ -49,6 +49,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                            else
                            {
                                $('#myPleaseWait').modal('hide');
+                               $('#mytable').modal('show');
                            }
                        }
                    )
