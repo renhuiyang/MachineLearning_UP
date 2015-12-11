@@ -15,6 +15,9 @@
                 <div class="panel-heading">
                     </div>
                 <div class="panel-body">
+                    <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
                     <form class="form-horizontal" role="form"  action="create" enctype="multipart/form-data" method="post">
                         <div class="form-group">
                             <label class="control-label">Training Data</label>
@@ -25,16 +28,16 @@
                         </div>
                     </form>
                     </div>
+                    <div class="col-lg-3"></div>
+                    <div>
+                    </div>
                 </div>
             </div>
     @include.footer()
 
 
 </div><!-- ./wrapper -->
-<script>
-      $.widget.bridge('uibutton', $.ui.button);
-    </script>
-
 @include.js()
+<script src="@routes.Assets.versioned("static/plugins/bootstrap-filestyle-1.2.1/js/bootstrap-filestyle.js")"></script>
 </body>
 </html>
