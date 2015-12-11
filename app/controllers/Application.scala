@@ -96,7 +96,7 @@ class Application extends Controller {
 
   def readExitsModel = Action.async{
     println("readExitsModel called")
-    val result = Future{Hdfs.list("savedModel")}
+    val result = Future{Hdfs.list("model")}
     result.map{
       case array:Array[String] =>Ok(views.html.savedModel(array))
       case _ => Ok(views.html.savedModel(Array[String]()))
