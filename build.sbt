@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   "org.apache.hadoop" % "hadoop-client" % "2.6.0",
   "org.apache.spark" %% "spark-core" % "1.5.1",
   "org.apache.spark" %% "spark-mllib" % "1.5.1",
+  "org.scala-lang.modules" %% "scala-pickling" % "0.10.1",
   specs2 % Test
 )
 

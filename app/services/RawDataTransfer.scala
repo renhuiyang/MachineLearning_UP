@@ -6,11 +6,14 @@ import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import scala.util.control.Exception._
 
+import scala.pickling.Defaults._
+import scala.pickling.json._
+
 /**
   * Created by yangrenhui on 15-12-7.
   */
 object RawDataTransfer {
-  private object ItemNum{
+  private class ItemNum{
     var nums = ArrayBuffer[ArrayBuffer[String]]()
 
     def set(i: Int, str: String): Unit = {
@@ -41,12 +44,13 @@ object RawDataTransfer {
   private def isDoubleNumber(s:String):Boolean = (allCatch opt s.toDouble).isDefined
 
   def process(rawTrainingData:String,rawTargetData:String,trainingData:String,targetData:String): Unit ={
+    val itemNum = new ItemNum()
 
     // Loop through each line in the file
     for (line <- Source.fromFile(rawTrainingData).getLines()) {
       val parts = line.split(",").map(_.trim).zipWithIndex.foreach{case(x,i)=>{
         if(!isDoubleNumber(x)){
-          ItemNum.set(i,x)
+          itemNum.set(i,x)
         }
       }}
     }
@@ -58,7 +62,7 @@ object RawDataTransfer {
       val parts = line.split(",").map(_.trim)
       val processedline = for{
         part <- parts
-      } yield ItemNum.get(parts.indexOf(part),part)
+      } yield itemNum.get(parts.indexOf(part),part)
       trainingwriter.write(processedline.mkString(",")+"\n")
     }
 
@@ -72,10 +76,56 @@ object RawDataTransfer {
       val parts = line.split(",").map(_.trim)
       val processedline = for {
         part <- parts
-      } yield ItemNum.get(parts.indexOf(part), part)
+      } yield itemNum.get(parts.indexOf(part), part)
       testWriter.write(processedline.mkString(",")+"\n")
     }
 
     testWriter.close()
+  }
+
+  def processTrainingRaw(rawTrainingData:String,trainingData:String,metricData:String): Unit ={
+    val itemNum = new ItemNum()
+    // Loop through each line in the file
+    for (line <- Source.fromFile(rawTrainingData).getLines()) {
+      line.split(",").map(_.trim).zipWithIndex.foreach {
+        case (x, i) => {
+          if (!isDoubleNumber(x)) {
+            itemNum.set(i, x)
+          }
+        }
+      }
+    }
+
+    val trainingwriter = new PrintWriter(new File(trainingData))
+
+    for (line <- Source.fromFile(rawTrainingData).getLines()) {
+      val parts = line.split(",").map(_.trim)
+      val processedline = for{
+        part <- parts
+      } yield itemNum.get(parts.indexOf(part),part)
+      trainingwriter.write(processedline.mkString(",")+"\n")
+    }
+
+    trainingwriter.close
+    val itemNumpicking = itemNum.pickle.value
+    val writer = new PrintWriter(new File(metricData))
+    writer.write(itemNumpicking)
+    writer.close
+  }
+
+  def processTargetRaw(rawTargetData:String,targetData:String,metricData:String): Unit ={
+    val metricfile = Source.fromFile(metricData)
+    val itemNumpicking = try metricfile.mkString finally metricfile.clone
+    val itemNum = itemNumpicking.unpickle[ItemNum]
+    val testWriter = new PrintWriter(new File(targetData))
+
+    for (line <- Source.fromFile(rawTargetData).getLines()) {
+      val parts = line.split(",").map(_.trim)
+      val processedline = for {
+        part <- parts
+      } yield itemNum.get(parts.indexOf(part), part)
+      testWriter.write(processedline.mkString(",")+"\n")
+    }
+    testWriter.close
   }
 }

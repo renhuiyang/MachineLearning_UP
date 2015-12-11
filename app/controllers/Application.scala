@@ -28,6 +28,13 @@ class Application extends Controller {
   val statesActor = system.actorOf(Props[StatesActor],name="mystatesactor")
   val processActor = system.actorOf(Props(new ProcessActor(statesActor)),name="myprocessactor")
 
+  new java.io.File("/tmp/Process").mkdirs
+  new java.io.File("/tmp/Download").mkdirs
+  new java.io.File("/tmp/Upload").mkdirs
+  new java.io.File("/tmp/Metric").mkdirs
+
+  Hdfs.mkdir("model")
+  Hdfs.mkdir("result")
 
   def index = Action {
     Ok(views.html.index())
@@ -94,5 +101,28 @@ class Application extends Controller {
       case array:Array[String] =>Ok(views.html.savedModel(array))
       case _ => Ok(views.html.savedModel(Array[String]()))
     }
+  }
+
+  def create = Action(parse.multipartFormData) { request =>
+    request.body.file("TrainingData").map { picture =>
+      //import java.io.File
+      val filename = picture.filename
+      picture.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
+      processActor!s"Create $filename"
+      Ok(views.html.createwaiting(filename))
+    }
+  }
+
+  def predict = Action{request=>
+    val tmpForm = Form(
+        "model"->text
+    )
+    val model = tmpForm.bindFromRequest.get
+    val file = request.body.asMultipartFormData.get.file("TragetData").get
+
+    val filename = file.filename
+    file.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
+    processActor!s"Predict $filename $model"
+    Ok(views.html.predictwaiting(filename))
   }
 }
