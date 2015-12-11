@@ -1,4 +1,4 @@
-@(taskname:String)
+@()
 <!DOCTYPE html>
 <html>
 @include.header()
@@ -7,7 +7,7 @@
 <div class="wrapper">
     @include.top()
     @include.left()
-        <form class="form-horizontal" role="form"  action="process" enctype="multipart/form-data" method="post">
+        <form class="form-horizontal" role="form"  action="create" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <label class="control-label">Training Data</label>
                 <input type="file" class="filestyle" name="TrainingData" data-buttonText="Find file">

@@ -108,6 +108,10 @@ class Application extends Controller {
     }
   }
 
+  def createModel = Action{
+    Ok(views.html.createModel())
+  }
+
   def create = Action(parse.multipartFormData) { request =>
     val picture = request.body.file("TrainingData").get
     //import java.io.File
