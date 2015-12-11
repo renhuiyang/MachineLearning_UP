@@ -1,7 +1,8 @@
 @(taskname:String)
 <!DOCTYPE html>
+<link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <html>
-<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
 <body>
 
 <div class="container" ng-app="myApp" ng-controller="customersCtrl">
@@ -28,7 +29,7 @@
 </div>
 <script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
 <script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
-
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
