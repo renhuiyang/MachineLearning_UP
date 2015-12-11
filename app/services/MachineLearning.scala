@@ -12,7 +12,9 @@ import sys.process._
   * Created by yangrenhui on 15-12-7.
   */
 object MachineLearning {
-  val conf = new SparkConf().setAppName("Spark MLib Exercise:SVMWithSGD")
+  val sysconf = ConfigFactory.load()
+  val masterurl = sysconf.getString("hadoop.master.uri")
+  val conf = new SparkConf().setAppName("Spark MLib Exercise:SVMWithSGD").setMaster(s"spark://$masterurl:7077")
   val sc = new SparkContext(conf)
 /*  val conf = ConfigFactory.load()
   val sparkMaster = conf.getString("hadoop.master.uri")
