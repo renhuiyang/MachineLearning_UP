@@ -11,6 +11,8 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "org.apache.hadoop" % "hadoop-client" % "2.6.0",
+  "org.apache.spark" %% "spark-core" % "1.5.1",
+  "org.apache.spark" %% "spark-mllib" % "1.5.1",
   specs2 % Test
 )
 
