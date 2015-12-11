@@ -115,7 +115,7 @@ object RawDataTransfer {
 
   def processTargetRaw(rawTargetData:String,targetData:String,metricData:String): Unit ={
     val metricfile = Source.fromFile(metricData)
-    val itemNumpicking = try metricfile.mkString finally metricfile.clone
+    val itemNumpicking = try metricfile.mkString finally metricfile.close
     val itemNum = itemNumpicking.unpickle[ItemNum]
     val testWriter = new PrintWriter(new File(targetData))
 
