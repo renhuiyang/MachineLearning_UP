@@ -80,7 +80,7 @@ class Application extends Controller {
 
   def query(id:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
-    (statesActor?s"Query /root/$id").mapTo[String].flatMap{percentage=>
+    (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
       if(percentage=="100"){
         Future{Hdfs.list("model")}.map{arrays=>Ok(views.html.savedModel(arrays))}
       }else{
