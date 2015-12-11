@@ -42,7 +42,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
 
   def create(filename:String): Unit ={
     statesActor ! s"Start $filename"
-    RawDataTransfer.processTrainingRaw(s"/tmp/Upload/$filename",s"/tmp/Process/$filename",s"/model/$filename")
+    RawDataTransfer.processTrainingRaw(s"/tmp/Upload/$filename",s"/tmp/Process/$filename",s"/tmp/Metric/$filename")
     statesActor!s"Update $filename 30"
     Hdfs.put(filename,s"/tmp/Process/$filename")
     statesActor!s"Update $filename 50"
