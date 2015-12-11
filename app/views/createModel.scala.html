@@ -1,12 +1,17 @@
 @()
 <!DOCTYPE html>
 <html>
-@include.header()
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
+@include.header()
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     @include.top()
     @include.left()
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
         <form class="form-horizontal" role="form"  action="create" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <label class="control-label">Training Data</label>
@@ -16,13 +21,15 @@
             <button type="submit" class="btn btn-default">Submit</button>
                 </div>
         </form>
+    </div><!-- /.content-wrapper -->
     @include.footer()
-</div>
 
-<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
-<script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
-<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-litelighter.js")"></script>
-<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-waiting.js")"></script>
+
+</div><!-- ./wrapper -->
+<script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
 @include.js()
 </body>
 </html>
