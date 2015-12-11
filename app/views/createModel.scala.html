@@ -1,0 +1,28 @@
+@(taskname:String)
+<!DOCTYPE html>
+<html>
+@include.header()
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    @include.top()
+    @include.left()
+        <form class="form-horizontal" role="form"  action="process" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label class="control-label">Training Data</label>
+                <input type="file" class="filestyle" name="TrainingData" data-buttonText="Find file">
+            </div>
+            <div class="form-group">
+            <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+        </form>
+    @include.footer()
+</div>
+
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-litelighter.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-waiting.js")"></script>
+@include.js()
+</body>
+</html>

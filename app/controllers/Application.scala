@@ -80,7 +80,13 @@ class Application extends Controller {
 
   def query(id:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
-    (statesActor?s"Query /root/$id").mapTo[String].map{percentage=>Ok(percentage)}
+    (statesActor?s"Query /root/$id").mapTo[String].flatMap{percentage=>
+      if(percentage=="100"){
+        Future{Hdfs.list("model")}.map{arrays=>Ok(views.html.savedModel(arrays))}
+      }else{
+        Future{Ok(percentage)}
+      }
+    }
   }
 
   def result = Action{
@@ -95,7 +101,6 @@ class Application extends Controller {
   }
 
   def readExitsModel = Action.async{
-    println("readExitsModel called")
     val result = Future{Hdfs.list("model")}
     result.map{
       case array:Array[String] =>Ok(views.html.savedModel(array))
