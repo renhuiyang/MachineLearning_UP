@@ -1,0 +1,43 @@
+@()
+<!DOCTYPE html>
+<html>
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/bootstrap-filestyle-1.2.1/js/bootstrap-filestyle.js")"></script>
+@include.header()
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    @include.top()
+    @include.left()
+
+            <div class="panel-group">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    </div>
+                <div class="panel-body">
+                    <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                    <form class="form-horizontal" role="form"  action="predict" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label class="control-label">Training Data</label>
+                            <input type="file" class="filestyle" name="TargetData" data-buttonText="Find file">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="col-lg-3"></div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+    @include.footer()
+
+
+</div><!-- ./wrapper -->
+@include.js()
+</body>
+</html>

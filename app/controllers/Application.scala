@@ -52,9 +52,9 @@ class Application extends Controller {
     )
   )
 
-  def upload = Action{
+/*  def upload = Action{
     Ok(views.html.upload("root"))
-  }
+  }*/
 
   def process = Action(parse.multipartFormData) { request =>
     request.body.file("TrainingData").map { picture =>
@@ -137,5 +137,9 @@ class Application extends Controller {
     file.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
     processActor!s"Predict $filename $model"
     Ok(views.html.predictwaiting(filename))
+  }
+
+  def uploadTarget(model:String) = Action{
+    Ok(views.html.uploadTarget(model))
   }
 }

@@ -8,7 +8,7 @@ GET     /login                            controllers.Application.login
 GET     /upload                           controllers.Application.upload
 POST    /process                          controllers.Application.process
 GET     /query/:id                        controllers.Application.query(id:String)
-GET     /result                            controllers.Application.result
+GET     /result                           controllers.Application.result
 GET     /download/:result                 controllers.Application.download(result:String)
 GET     /readExitsModel                   controllers.Application.readExitsModel
 
@@ -16,8 +16,9 @@ POST    /create                           controllers.Application.create
 POST    /predict                          controllers.Application.predict
 
 GET     /createModel                      controllers.Application.createModel
+GET     /uploadTarget/:model              controllers.Application.uploadTarget(model:String)
 
 #static view
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)

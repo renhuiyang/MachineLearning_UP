@@ -43,6 +43,10 @@
             <div class="panel-group">
                 <div class="panel panel-info">
                     <div class="panel-heading">
+                        <div class="btn-group">
+                            <a href="uploadTarget/$selectedModel" class="btn btn-primary">使用模型</a>
+                            <a href="createModel" class="btn btn-primary">创建模型</a>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered" id="mytable" ng-show="show">
@@ -106,6 +110,8 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
      $scope.selectedRow=null;
      $scope.setClickedRow = function(index){
          $scope.selectedRow = index;
+         $scope.selectedModel = $scope.models[indesx]
+         console.log("Model"+$scope.selectedModel)
      }
   }
 
