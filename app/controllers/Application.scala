@@ -36,6 +36,8 @@ class Application extends Controller {
   Hdfs.mkdir("model")
   Hdfs.mkdir("result")
 
+  case class result(percentage:String,models:Array[String])
+
   def index = Action {
     Ok(views.html.index())
   }
@@ -82,9 +84,15 @@ class Application extends Controller {
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
     (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
       if(percentage=="100"){
-        Future{Hdfs.list("model")}.map{arrays=>Ok(views.html.savedModel(arrays))}
+        Future{Hdfs.list("model")}.map{arrays=>
+        {
+          val res = new result("100",arrays)
+          Ok(res)
+        }
+        }
       }else{
-        Future{Ok(percentage)}
+        val res = new result(percentage,new Array[String]())
+        Future{Ok(res)}
       }
     }
   }
