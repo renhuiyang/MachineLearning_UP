@@ -129,7 +129,7 @@ class Application extends Controller {
 
   def predict = Action(parse.multipartFormData){request=>
     println(s"body is "+request.body)
-    val model = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0)
+    val model = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
     val file = request.body.file("TargetData").get
 
     val filename = file.filename
