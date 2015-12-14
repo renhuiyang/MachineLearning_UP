@@ -8,6 +8,7 @@ import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import play.api._
 import play.api.libs.concurrent.Akka
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -87,12 +88,12 @@ class Application extends Controller {
         Future{Hdfs.list("model")}.map{arrays=>
         {
           val res = new result("100",arrays)
-          Ok(res)
+          Ok(Json.toJson(res))
         }
         }
       }else{
         val res = new result(percentage,new Array[String]())
-        Future{Ok(res)}
+        Future{Ok(Json.toJson(res))}
       }
     }
   }
