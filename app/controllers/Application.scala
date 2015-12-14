@@ -131,7 +131,8 @@ class Application extends Controller {
         "model"->text
     )
     //val model = tmpForm.bindFromRequest()(request).get
-    val model = request.body.asFormUrlEncoded.get.get("model")
+    val model = request.body.asFormUrlEncoded.getOrElse(Map("model"->"invalid")).get("model")
+    println(s"model is $model")
     val file = request.body.asMultipartFormData.get.file("TragetData").get
 
     val filename = file.filename
