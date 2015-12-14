@@ -118,6 +118,7 @@ class Application extends Controller {
   }
 
   def create = Action(parse.multipartFormData) { request =>
+    println(s"body is "+request.body)
     val picture = request.body.file("TrainingData").get
     //import java.io.File
     val filename = picture.filename
@@ -127,13 +128,9 @@ class Application extends Controller {
   }
 
   def predict = Action(parse.multipartFormData) {request=>
-    val tmpForm = Form(
-        "model"->text
-    )
-    //val model = tmpForm.bindFromRequest()(request).get
-    val model = request.body.asFormUrlEncoded.get("model")
     println(s"body is "+request.body)
-    val file = request.body.file("TragetData").get
+    val model = request.body.asFormUrlEncoded.get("model")
+    val file = request.body.file("TargetData").get
 
     val filename = file.filename
     file.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
