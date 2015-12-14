@@ -126,14 +126,14 @@ class Application extends Controller {
     Ok(views.html.createwaiting(filename))
   }
 
-  def predict = Action{request=>
+  def predict = Action(parse.multipartFormData) {request=>
     val tmpForm = Form(
         "model"->text
     )
     //val model = tmpForm.bindFromRequest()(request).get
-    val model = request.body.asFormUrlEncoded.getOrElse(Map("model"->"invalid")).get("model")
+    val model = request.body.asFormUrlEncoded.get("model")
     println(s"model is $model")
-    val file = request.body.asMultipartFormData.get.file("TragetData").get
+    val file = request.body.file("TragetData").get
 
     val filename = file.filename
     file.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
