@@ -49,14 +49,14 @@
                             <thead>
                             <tr>
                                 <th>Index</th>
-                                <th><a href="dowload?result={{Name}}">Name</a></th>
+                                <th>Name</th>
                                 <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td>{{$index}}</td>
-                                <td>{{m}}</td>
+                                <td><a href="dowload?result={{m.split('/').pop()}}">{{m}}</a>></td>
                                 <td>test</td>
                             </tr>
                             </tbody>
@@ -101,14 +101,6 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                    })
              }
          ,1000)
-
-     $scope.selectedRow=null;
-     $scope.setClickedRow = function(index){
-         $scope.selectedRow = index;
-         var model = $scope.models[index]
-         $scope.selectedModel = model.split('/').pop();
-         console.log("Model:"+$scope.selectedModel)
-     }
   }
 
   poll()

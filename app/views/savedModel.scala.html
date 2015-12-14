@@ -1,64 +1,65 @@
 @(arrays:Array[String])
 <!DOCTYPE html>
+<link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <html>
-<link rel="stylesheet" href="@routes.Assets.versioned("static/plugins/react-bootstrap-table/css/react-bootstrap-table.css")">
 <script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script src="@routes.Assets.versioned("static/plugins/react-bootstrap-table/js/react-bootstrap-table.min.js")"></script>
 @include.header()
+<style>
+    .selected {
+    background-color:black;
+    color:white;
+    font-weight:bold;
+    }
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     @include.top()
     @include.left()
-
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <table class="table table-condensed">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            @for(p<-arrays){
-            <tr>
-                <td>@p</td>
-                <td>test</td>
-            </tr>
-            }
-            </tbody>
-        </table>
-<!--        <BootstrapTable data={products} selectRow={selectRowProp}>
-            <TableHeaderColumn dataField="id" isKey={true}>Product ID</TableHeaderColumn>
-            <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
-        </BootstrapTable>-->
+        <div class="container" ng-app="myApp" ng-controller="customersCtrl">
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="btn-group">
+                            <a href="uploadTarget?model={{selectedModel}}"class="btn btn-primary">使用模型</a>
+                            <a href="createModel" class="btn btn-primary">创建模型</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered" id="mytable">
+                            <thead>
+                            <tr>
+                                <th>Index</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in arrays" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
+                                <td>{{$index}}</td>
+                                <td>{{m}}</td>
+                                <td>test</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
     @include.footer()
-
-
-</div><!-- ./wrapper -->
+</div>
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
 <script>
-      var ReactBsTable = window.BootstrapTable;
-      var products = []
-      var id = 0
-      @for(p<-arrays){
-          products.push({id:id,name:@p})
-      }
-
-      function onRowSelect(row, isSelected){
-          console.log(row);
-          console.log("selected: " + isSelected)
-      }
-
-      var selectRowProp = {
-          mode: "radio",
-          clickToSelect: true,
-          bgColor: "rgb(238, 193, 213)",
-          onSelect: onRowSelect
-      };
-    </script>
-
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope,$timeout,$http) {
+});
+</script>
 @include.js()
 </body>
 </html>
