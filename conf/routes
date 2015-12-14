@@ -14,7 +14,7 @@ POST    /create                           controllers.Application.create
 POST    /predict                          controllers.Application.predict
 
 GET     /createModel                      controllers.Application.createModel
-GET     /uploadTarget/:model              controllers.Application.uploadTarget(model:String)
+GET     /uploadTarget                     controllers.Application.uploadTarget(model:String)
 
 #static view
 
