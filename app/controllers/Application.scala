@@ -40,7 +40,7 @@ class Application extends Controller {
   def index = Action {
     Ok(views.html.index())
   }
-  
+
   def query(id:String,qtype:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
     (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
@@ -55,11 +55,7 @@ class Application extends Controller {
       }
     }
   }
-
-  def result = Action{
-    Ok(views.html.result("10","banking-batch_notital.csv"))
-  }
-
+  
   def download(result:String)=Action{
     Hdfs.get(s"result/$result",s"/tmp/Download/$result")
     Ok.sendFile(
