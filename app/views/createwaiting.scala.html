@@ -45,7 +45,7 @@
                     <div class="panel-heading">
                     </div>
                     <div class="panel-body">
-                        <table class="table table-condensed" id="mytable" ng-show="show">
+                        <table class="table table-bordered" id="mytable" ng-show="show">
                             <thead>
                             <tr>
                                 <th>#</th>>
@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
-                                <td></td>
+                                <td>{{$index}}</td>
                                 <td>{{m}}</td>
                                 <td>test</td>
                             </tr>
@@ -64,6 +64,8 @@
                     </div>
                 </div>
             </div>
+            #添加button group
+
         </div>
     </div>
     @include.footer()
