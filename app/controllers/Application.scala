@@ -89,7 +89,7 @@ class Application extends Controller {
         }
         }
       }else{
-        Future{Ok(Json.toJson("percentage"->percentage))}
+        Future{Ok(Json.obj("percentage"->percentage))}
       }
     }
   }
