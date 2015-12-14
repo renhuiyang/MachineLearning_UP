@@ -5,7 +5,6 @@
 # Home page
 GET     /                                 controllers.Application.index
 GET     /login                            controllers.Application.login
-GET     /upload                           controllers.Application.upload
 POST    /process                          controllers.Application.process
 GET     /query/:id                        controllers.Application.query(id:String)
 GET     /result                           controllers.Application.result
