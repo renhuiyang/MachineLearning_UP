@@ -127,7 +127,7 @@ class Application extends Controller {
     Ok(views.html.createwaiting(filename))
   }
 
-  def predict = Action(parse.multipartFormData) {request=>
+/*  def predict = Action(parse.multipartFormData) {request=>
     println(s"body is "+request.body)
     val model = request.body.asFormUrlEncoded.get("model")
     val file = request.body.file("TargetData").get
@@ -136,6 +136,11 @@ class Application extends Controller {
     file.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
     processActor!s"Predict $filename $model"
     Ok(views.html.predictwaiting(filename))
+  }*/
+
+  def predic = Action{request=>
+    println(s"body is "+request.body.asMultipartFormData)
+    Ok("Success")
   }
 
   def uploadTarget(model:String) = Action{
