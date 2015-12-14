@@ -57,7 +57,7 @@ class Application extends Controller {
   }
 
   def download(result:String)=Action{
-    Hdfs.get(s"result/$result",s"/tmp/Download/$result")
+    Hdfs.get(s"result/$result",s"/tmp/Download/$result/part-00000")
     Ok.sendFile(
       content = new java.io.File(s"/tmp/Download/$result"),
       fileName = _ => result
@@ -91,7 +91,6 @@ class Application extends Controller {
   }
 
   def create = Action(parse.multipartFormData) { request =>
-    println(s"body is "+request.body)
     val picture = request.body.file("TrainingData").get
     //import java.io.File
     val filename = picture.filename
@@ -101,7 +100,6 @@ class Application extends Controller {
   }
 
   def predict = Action(parse.multipartFormData){request=>
-    println(s"body is "+request.body)
     val model = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
     val file = request.body.file("TargetData").get
 
