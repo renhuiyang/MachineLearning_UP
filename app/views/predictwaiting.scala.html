@@ -68,7 +68,6 @@
                     </div>
                 </div>
             </div>
-            #添加button group
 
         </div>
     </div>
@@ -87,7 +86,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
      $timeout(
          function(){
              console.log("call..."+$scope.count)
-             $http.get(/query?qtype=result&id="+"@taskname").success(
+             $http.get("/query?qtype=result&id="+"@taskname").success(
                        function(data){
                            $scope.count = data.percentage;
                            if($scope.count != "100"){
