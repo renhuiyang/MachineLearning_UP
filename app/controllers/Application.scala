@@ -40,45 +40,7 @@ class Application extends Controller {
   def index = Action {
     Ok(views.html.index())
   }
-
-  def login = Action{
-    Ok(views.html.login("Login"))
-  }
-
-  val taskForm = Form(
-    tuple(
-      "TrainingData" -> text,
-      "TargetData" -> text
-    )
-  )
-
-/*  def upload = Action{
-    Ok(views.html.upload("root"))
-  }*/
-
-/*  def process = Action(parse.multipartFormData) { request =>
-    request.body.file("TrainingData").map { picture =>
-      //import java.io.File
-      val filename = picture.filename
-      picture.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
-      request.body.file("TargetData").map{ target =>
-        val targetname = target.filename
-        target.ref.moveTo(new java.io.File(s"/tmp/Upload/$targetname"))
-
-        processActor!s"Start $filename $targetname"
-
-        Ok(views.html.result("wait",targetname))
-      }.getOrElse{
-        Redirect(routes.Application.upload).flashing{
-          "error"->"Missing Target file"
-        }
-      }
-    }.getOrElse {
-      Redirect(routes.Application.upload).flashing(
-        "error" -> "Missing Training file")
-    }
-  }*/
-
+  
   def query(id:String,qtype:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
     (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
