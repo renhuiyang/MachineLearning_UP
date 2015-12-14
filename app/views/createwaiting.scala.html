@@ -6,7 +6,7 @@
 <body>
 
 <div class="container" ng-app="myApp" ng-controller="customersCtrl">
-<div class="modal fade bs-example-modal-sm" ng-hide="show">
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,8 +48,8 @@
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
   $scope.count = "0"
-  $scope.show = false
-  //$('#myPleaseWait').modal('show');
+  //$scope.show = false
+  $('#myPleaseWait').modal('show');
   var poll = function(){
      $timeout(
          function(){
@@ -62,7 +62,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                            }
                            else
                            {
-                               //$('#myPleaseWait').modal('hide');
+                               $('#myPleaseWait').modal('hide');
                                $scope.show = true
                                $scope.models = data.models
                            }
