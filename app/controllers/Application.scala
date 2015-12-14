@@ -138,7 +138,7 @@ class Application extends Controller {
     Ok(views.html.predictwaiting(filename))
   }*/
 
-  def predic = Action{request=>
+  def predict = Action{request=>
     println(s"body is "+request.body.asMultipartFormData)
     Ok("Success")
   }
