@@ -10,7 +10,7 @@ import services.{MachineLearning, Hdfs, RawDataTransfer}
 class ProcessActor(statesActor:ActorRef) extends Actor{
   val sysconf = ConfigFactory.load()
   // hdfs://10.45.79.217:9000/user/root/bankResult
-  val hdfsMasterUrl=sysconf.getString("hadoop.master.uri")+":9000/user/root"
+  val hdfsMasterUrl="hdfs://"+sysconf.getString("hadoop.master.uri")+":9000/user/root"
   object messages{
     def unapplySeq(msg:String):Option[Seq[String]]={
       val msgs = msg.trim.split(" ")
@@ -49,7 +49,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     // hdfs://10.45.79.217:9000/user/root/bankResult
     val hdfsTrainingData:String = s"$hdfsMasterUrl/$filename"
     val numIteration:Int = 500
-    val hdfsmodelName:String =  s"$hdfsMasterUrl/metric/$filename"
+    val hdfsmodelName:String =  s"$hdfsMasterUrl/model/$filename"
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
     statesActor!s"Update $filename 100"
   }
