@@ -56,7 +56,7 @@ class Application extends Controller {
     Ok(views.html.upload("root"))
   }*/
 
-  def process = Action(parse.multipartFormData) { request =>
+/*  def process = Action(parse.multipartFormData) { request =>
     request.body.file("TrainingData").map { picture =>
       //import java.io.File
       val filename = picture.filename
@@ -77,7 +77,7 @@ class Application extends Controller {
       Redirect(routes.Application.upload).flashing(
         "error" -> "Missing Training file")
     }
-  }
+  }*/
 
   def query(id:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
