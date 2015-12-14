@@ -55,7 +55,7 @@ class Application extends Controller {
       }
     }
   }
-  
+
   def download(result:String)=Action{
     Hdfs.get(s"result/$result",s"/tmp/Download/$result")
     Ok.sendFile(
