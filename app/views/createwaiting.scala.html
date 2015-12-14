@@ -48,7 +48,7 @@
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
   $scope.count = "0"
-  //$('#myPleaseWait').modal('show');
+  $('#myPleaseWait').modal('show');
   var poll = function(){
      $timeout(
          function(){
@@ -61,7 +61,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                            }
                            else
                            {
-                               //$('#myPleaseWait').modal('hide');
+                               $('#myPleaseWait').modal('hide');
                                $scope.show = true
                                $scope.models = data.models
                            }
