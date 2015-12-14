@@ -130,7 +130,8 @@ class Application extends Controller {
     val tmpForm = Form(
         "model"->text
     )
-    val model = tmpForm.bindFromRequest()(request).get
+    //val model = tmpForm.bindFromRequest()(request).get
+    val model = request.body.asFormUrlEncoded.get.get("model")
     val file = request.body.asMultipartFormData.get.file("TragetData").get
 
     val filename = file.filename
