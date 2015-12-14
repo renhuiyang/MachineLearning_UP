@@ -106,12 +106,26 @@ class Application extends Controller {
     )
   }
 
-  def readExitsModel = Action.async{
-    val result = Future{Hdfs.list("model")}
-    result.map{
-      case array:Array[String] =>Ok(views.html.savedModel(array))
-      case _ => Ok(views.html.savedModel(Array[String]()))
+  def showModels = Action.async {
+    Future {
+      Hdfs.list("model")
+    }.map { arrays => {
+      Ok(Json.obj("models" -> Json.toJson(arrays)))
     }
+    }
+  }
+
+  def showResults = Action.async {
+    Future {
+      Hdfs.list("result")
+    }.map { arrays => {
+      Ok(Json.obj("models" -> Json.toJson(arrays)))
+    }
+    }
+  }
+
+  def readExitsModel = Action{
+    Ok(views.html.savedModel())
   }
 
   def createModel = Action{

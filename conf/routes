@@ -16,6 +16,9 @@ POST    /predict                          controllers.Application.predict
 GET     /createModel                      controllers.Application.createModel
 GET     /uploadTarget                     controllers.Application.uploadTarget(model:String)
 
+GET     /showModels                       controllers.Application.showModels
+GET     /showResults                      controllers.Application.showResults
+
 #static view
 
 # Map static resources from the /public folder to the /assets URL path

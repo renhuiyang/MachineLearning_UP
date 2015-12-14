@@ -1,4 +1,4 @@
-@(arrays:Array[String])
+@()
 <!DOCTYPE html>
 <link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -58,6 +58,14 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
+  $http.get("/showModels").success(function(data){$scope.models = data.models})
+  $scope.selectedRow=null;
+  $scope.setClickedRow = function(index){
+         $scope.selectedRow = index;
+         var model = $scope.models[index]
+         $scope.selectedModel = model.split('/').pop();
+         console.log("Model:"+$scope.selectedModel)
+  }
 });
 </script>
 @include.js()
