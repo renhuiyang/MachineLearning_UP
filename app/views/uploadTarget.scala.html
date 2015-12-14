@@ -1,4 +1,4 @@
-@()
+@(model:String)
 <!DOCTYPE html>
 <html>
 <script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
@@ -21,8 +21,13 @@
                     <div class="col-lg-6">
                     <form class="form-horizontal" role="form"  action="predict" enctype="multipart/form-data" method="post">
                         <div class="form-group">
-                            <label class="control-label">Training Data</label>
+                            <label class="control-label">目标数据</label>
                             <input type="file" class="filestyle" name="TargetData" data-buttonText="Find file">
+                            <>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">训练模型</label>
+                            <input type="text" class="form-control" value="@model">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-default">Submit</button>
