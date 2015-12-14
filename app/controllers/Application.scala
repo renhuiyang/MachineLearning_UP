@@ -37,8 +37,6 @@ class Application extends Controller {
   Hdfs.mkdir("model")
   Hdfs.mkdir("result")
 
-  case class result(percentage:String,models:Array[String])
-
   def index = Action {
     Ok(views.html.index())
   }
@@ -87,13 +85,11 @@ class Application extends Controller {
       if(percentage=="100"){
         Future{Hdfs.list("model")}.map{arrays=>
         {
-          val res = new result("100",arrays)
-          Ok(Json.toJson(res))
+          Ok(Json.obj("percentage"->percentage,"models"->Json.toJson(arrays)))
         }
         }
       }else{
-        val res = new result(percentage,new Array[String]())
-        Future{Ok(Json.toJson(res))}
+        Future{Ok(Json.toJson("percentage"->percentage))}
       }
     }
   }
