@@ -18,9 +18,6 @@ class StatesActor extends Actor{
    def receive={
      case messages("Start",str,_*)=>states+=(str->"0")
      case messages("Query",str,_*)=>{
-       println("---------start------------")
-       states.map{item=>println("key:"+item._1+"value:"+item._2)}
-       println("-----------end------------")
        if(states.contains(str)){
          sender!states(str)
          if(states(str) == "100")

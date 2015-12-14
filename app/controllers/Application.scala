@@ -79,11 +79,11 @@ class Application extends Controller {
     }
   }*/
 
-  def query(id:String) = Action.async{
+  def query(id:String,qtype:String) = Action.async{
     implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
     (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
       if(percentage=="100"){
-        Future{Hdfs.list("model")}.map{arrays=>
+        Future{Hdfs.list(qtype)}.map{arrays=>
         {
           Ok(Json.obj("percentage"->percentage,"models"->Json.toJson(arrays)))
         }
@@ -129,7 +129,7 @@ class Application extends Controller {
 
   def predict = Action(parse.multipartFormData){request=>
     println(s"body is "+request.body)
-    val model = request.body.dataParts.get("model").get
+    val model = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0)
     val file = request.body.file("TargetData").get
 
     val filename = file.filename
@@ -137,7 +137,7 @@ class Application extends Controller {
     processActor!s"Predict $filename $model"
     Ok(views.html.predictwaiting(filename))
   }
-  
+
   def uploadTarget(model:String) = Action{
     Ok(views.html.uploadTarget(model))
   }

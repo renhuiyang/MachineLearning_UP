@@ -1,56 +1,103 @@
 @(taskname:String)
 <!DOCTYPE html>
+<link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <html>
-<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
-<body>
-
-<div ng-app="myApp" ng-controller="customersCtrl">
-<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
-    role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+@include.header()
+<style>
+    .selected {
+    background-color:black;
+    color:white;
+    font-weight:bold;
+    }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    @include.top()
+    @include.left()
+    <div class="content-wrapper">
+        <div class="container" ng-app="myApp" ng-controller="customersCtrl">
+            <div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1" role="dialog" aria-hidden="true"
+                 data-backdrop="static">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">
                     <span class="glyphicon glyphicon-time">
                     </span>Please Wait
-                 </h4>
-            </div>
-            <div class="modal-body">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info
                     progress-bar-striped active"
-                    style="width: 100%">
+                                     style="width: 100%">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="btn-group">
+                            <a href="uploadTarget?model={{selectedModel}}"class="btn btn-primary">使用模型</a>
+                            <a href="createModel" class="btn btn-primary">创建模型</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered" id="mytable" ng-show="show">
+                            <thead>
+                            <tr>
+                                <th>Index</th>>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
+                                <td>{{$index}}</td>
+                                <td>{{m}}</td>
+                                <td>test</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            #添加button group
+
         </div>
     </div>
+    @include.footer()
 </div>
-</div>
-
 <script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
 <script src="@routes.Assets.versioned("static/bootstrap/js/bootstrap.min.js")"></script>
-<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-litelighter.js")"></script>
-<script src="@routes.Assets.versioned("static/plugins/jquery-waiting/jquery-waiting.js")"></script>
-
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
 <script>
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
   $scope.count = "0"
+  //$scope.show = false
   $('#myPleaseWait').modal('show');
   var poll = function(){
      $timeout(
          function(){
              console.log("call..."+$scope.count)
-             $http.get("/query/"+"@taskname").success(
+             $http.get(/query?qtype=result&id="+"@taskname").success(
                        function(data){
-                           $scope.count = data;
+                           $scope.count = data.percentage;
                            if($scope.count != "100"){
                                poll()
                            }
                            else
                            {
                                $('#myPleaseWait').modal('hide');
+                               $scope.show = true
+                               $scope.models = data.models
                            }
                        }
                    )
@@ -59,12 +106,20 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                    })
              }
          ,1000)
+
+     $scope.selectedRow=null;
+     $scope.setClickedRow = function(index){
+         $scope.selectedRow = index;
+         var model = $scope.models[index]
+         $scope.selectedModel = model.split('/').pop();
+         console.log("Model:"+$scope.selectedModel)
+     }
   }
 
   poll()
 
 });
 </script>
-
+@include.js()
 </body>
 </html>

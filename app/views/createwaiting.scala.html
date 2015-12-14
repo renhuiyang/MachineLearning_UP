@@ -87,7 +87,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
      $timeout(
          function(){
              console.log("call..."+$scope.count)
-             $http.get("/query/"+"@taskname").success(
+             $http.get("/query?qtype=model&id="+"@taskname").success(
                        function(data){
                            $scope.count = data.percentage;
                            if($scope.count != "100"){
