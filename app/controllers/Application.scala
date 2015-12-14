@@ -99,9 +99,10 @@ class Application extends Controller {
   }
 
   def download(result:String)=Action{
+    Hdfs.get(s"result/$result",s"/tmp/Download/$result")
     Ok.sendFile(
-      content = new java.io.File(s"/tmp/Download/$result.txt"),
-      fileName = _ => "result.txt"
+      content = new java.io.File(s"/tmp/Download/$result"),
+      fileName = _ => result
     )
   }
 

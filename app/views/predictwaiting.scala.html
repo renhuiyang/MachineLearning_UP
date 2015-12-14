@@ -43,22 +43,18 @@
             <div class="panel-group">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <div class="btn-group">
-                            <a href="uploadTarget?model={{selectedModel}}"class="btn btn-primary">使用模型</a>
-                            <a href="createModel" class="btn btn-primary">创建模型</a>
-                        </div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered" id="mytable" ng-show="show">
                             <thead>
                             <tr>
-                                <th>Index</th>>
+                                <th>Index</th>
                                 <th>Name</th>
                                 <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
+                            <tr ng-repeat="m in models">
                                 <td>{{$index}}</td>
                                 <td>{{m}}</td>
                                 <td>test</td>

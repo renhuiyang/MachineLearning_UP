@@ -7,7 +7,7 @@ GET     /                                 controllers.Application.index
 GET     /login                            controllers.Application.login
 GET     /query                            controllers.Application.query(id:String,qtype:String)
 GET     /result                           controllers.Application.result
-GET     /download/:result                 controllers.Application.download(result:String)
+GET     /download                         controllers.Application.download(result:String)
 GET     /readExitsModel                   controllers.Application.readExitsModel
 
 POST    /create                           controllers.Application.create
