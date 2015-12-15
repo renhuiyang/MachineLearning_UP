@@ -73,7 +73,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
       console.log("removed model called")
       $http.get("/removeModel?model="+$scope.selectedModel).success(function(data){
           delete $scope.models[$scope.selectedRow]
-          console.log($scope.models)
+          console.log("models:"+$scope.models)
           $scope.selectedRow=null;
           $scope.selected = true;
       }
