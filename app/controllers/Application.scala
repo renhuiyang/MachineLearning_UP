@@ -57,12 +57,12 @@ class Application extends Controller {
   }
 
   def download(result:String)=Action{
-    //if(! new java.io.File(s"/tmp/Download/$result").exists){
+    if(! new java.io.File(s"/tmp/Download/$result").exists){
       Hdfs.get(s"result/$result/part-00000",s"/tmp/Download/raw_$result")
       Hdfs.del(s"result/$result")
       RawDataTransfer.zipResult(s"/tmp/Upload/$result",s"/tmp/Download/raw_$result",s"/tmp/Download/$result")
-      //new java.io.File(s"/tmp/Download/raw_$result").delete
-    //}
+      new java.io.File(s"/tmp/Download/raw_$result").delete
+    }
     Ok.sendFile(
       content = new java.io.File(s"/tmp/Download/$result"),
       fileName = _ => result
