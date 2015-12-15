@@ -51,19 +51,27 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     val numIteration:Int = 500
     val hdfsmodelName:String =  s"$hdfsMasterUrl/model/$filename"
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
-    statesActor!s"Update $filename 100"
+    statesActor!s"Update $filename 90"
+    Hdfs.del(filename)
+    statesActor!s"Update $filename 90"
   }
 
   def predict(filename:String, metric:String):Unit={
     statesActor ! s"Start $filename"
     RawDataTransfer.processTargetRaw(s"/tmp/Upload/$filename",s"/tmp/Process/$filename",s"/tmp/Metric/$metric")
     statesActor!s"Update $filename 30"
-    Hdfs.put(filename,s"/tmp/Process/$filename")
+    //upload origin file
+    Hdfs.put(filename,s"/tmp/Upload/$filename")
+    //upload processed file
+    Hdfs.put(s"processed_$filename",s"/tmp/Process/$filename")
     statesActor!s"Update $filename 50"
     val modelName:String = s"$hdfsMasterUrl/model/$metric"
     val hdfsTargetData:String = s"$hdfsMasterUrl/$filename"
     val hdfsresultPath:String = s"$hdfsMasterUrl/result/$filename"
     MachineLearning.predict(modelName,hdfsTargetData,hdfsresultPath)
+    statesActor!s"Update $filename 80"
+    Hdfs.del(filename)
+    Hdfs.del(s"processed_$filename")
     statesActor!s"Update $filename 100"
   }
 }
