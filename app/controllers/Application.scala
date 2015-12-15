@@ -123,6 +123,6 @@ class Application extends Controller {
 
   def removeModel(model:String) = Action{
     Hdfs.del(s"model/$model")
-    Ok("success")
+    Ok(views.html.savedModel())
   }
 }

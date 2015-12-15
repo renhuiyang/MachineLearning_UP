@@ -25,23 +25,23 @@
                         <div class="btn-group">
                             <a href="uploadTarget?model={{selectedModel}}" class="btn btn-primary" ng-disabled="selected">使用模型</a>
                             <a href="createModel" class="btn btn-primary">创建模型</a>
-                            <a ng-click="removeModel()" class="btn btn-primary">删除模型</a>
+                            <a ng-href="removeModel?model={{selectedModel}}" class="btn btn-primary">删除模型</a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered" id="mytable">
                             <thead>
                             <tr>
-                                <!--<th>Index</th>-->
+                                <th>Index</th>
                                 <th>Name</th>
-                                <!--<th>Description</th>-->
+                                <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
-                                <!--<td>{{$index}}</td>-->
+                                <td>{{$index}}</td>
                                 <td>{{m}}</td>
-                                <!--<td>test</td>-->
+                                <td>test</td>
                             </tr>
                             </tbody>
                         </table>
@@ -68,16 +68,6 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
          var model = $scope.models[index]
          $scope.selectedModel = model.split('/').pop();
          console.log("Model:"+$scope.selectedModel)
-  }
-  $scope.removeModel = function(){
-      console.log("removed model called")
-      $http.get("/removeModel?model="+$scope.selectedModel).success(function(data){
-          delete $scope.models[$scope.selectedRow]
-          console.log("models:"+$scope.models)
-          $scope.selectedRow=null;
-          $scope.selected = true;
-      }
-      )
   }
 });
 </script>
