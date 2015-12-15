@@ -53,7 +53,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
     statesActor!s"Update $filename 90"
     Hdfs.del(filename)
-    statesActor!s"Update $filename 90"
+    statesActor!s"Update $filename 100"
   }
 
   def predict(filename:String, metric:String):Unit={
