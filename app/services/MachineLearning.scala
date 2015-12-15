@@ -25,8 +25,8 @@ object MachineLearning {
     runCmd.!
   }
 
-  def predict(modelName:String,hdfsTargetData:String,hdfsresultPath:String): Unit ={
-    val runCmd = cmd +s"Predict $modelName $hdfsTargetData $hdfsresultPath"
+  def predict(modelName:String,hdfsTargetData:String,hdfsresultPath:String,hdfsProcessTargetData:String): Unit ={
+    val runCmd = cmd +s"Predict $modelName $hdfsTargetData $hdfsresultPath $hdfsProcessTargetData"
     runCmd.!
   }
 }
