@@ -17,6 +17,7 @@ GET     /uploadTarget                     controllers.Application.uploadTarget(m
 
 GET     /showModels                       controllers.Application.showModels
 GET     /showResults                      controllers.Application.showResults
+GET     /removeModel                      controllers.Application.removeModel(model:String)
 
 #static view
 

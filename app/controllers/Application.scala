@@ -117,4 +117,9 @@ class Application extends Controller {
   def uploadTarget(model:String) = Action{
     Ok(views.html.uploadTarget(model))
   }
+
+  def removeModel(model:String) = Action{
+    Hdfs.del(s"model/$model")
+    Ok("success")
+  }
 }
