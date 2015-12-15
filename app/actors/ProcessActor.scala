@@ -60,10 +60,8 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     statesActor ! s"Start $filename"
     RawDataTransfer.processTargetRaw(s"/tmp/Upload/$filename",s"/tmp/Process/$filename",s"/tmp/Metric/$metric")
     statesActor!s"Update $filename 30"
-    //upload origin file
-    Hdfs.put(filename,s"/tmp/Upload/$filename")
     //upload processed file
-    Hdfs.put(s"processed_$filename",s"/tmp/Process/$filename")
+    Hdfs.put(filename,s"/tmp/Process/$filename")
     statesActor!s"Update $filename 50"
     val modelName:String = s"$hdfsMasterUrl/model/$metric"
     val hdfsTargetData:String = s"$hdfsMasterUrl/$filename"
