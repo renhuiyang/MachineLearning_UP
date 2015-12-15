@@ -97,11 +97,12 @@ class Application extends Controller {
 
   def create = Action(parse.multipartFormData) { request =>
     val numIteration = request.body.dataParts.get("numIteration").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
+    val modelName = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
     val picture = request.body.file("TrainingData").get
     //import java.io.File
     val filename = picture.filename
     picture.ref.moveTo(new java.io.File(s"/tmp/Upload/$filename"))
-    processActor ! s"Create $filename $numIteration"
+    processActor ! s"Create $filename $numIteration $modelName"
     Ok(views.html.createwaiting(filename))
   }
 

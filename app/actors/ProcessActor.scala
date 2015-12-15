@@ -19,7 +19,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
   }
   def receive={
     case messages("Start",trainingfile,targetfile,_*)=>process(trainingfile,targetfile)
-    case messages("Create",localfile,numberIteration,_*)=>create(localfile,numberIteration)
+    case messages("Create",localfile,numberIteration,modelName,_*)=>create(localfile,numberIteration,modelName)
     case messages("Predict",localfile,metric,_*)=>predict(localfile,metric)
   }
 
@@ -40,7 +40,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     Hdfs.del(filename)
   }
 
-  def create(filename:String, numberIteration:String): Unit ={
+  def create(filename:String, numberIteration:String,modelName:String): Unit ={
     statesActor ! s"Start $filename"
     RawDataTransfer.processTrainingRaw(s"/tmp/Upload/$filename",s"/tmp/Process/$filename",s"/tmp/Metric/$filename")
     statesActor!s"Update $filename 30"
@@ -49,7 +49,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     // hdfs://10.45.79.217:9000/user/root/bankResult
     val hdfsTrainingData:String = s"$hdfsMasterUrl/$filename"
     val numIteration = numberIteration.toInt
-    val hdfsmodelName:String =  s"$hdfsMasterUrl/model/$filename"
+    val hdfsmodelName:String =  s"$hdfsMasterUrl/model/$modelName"
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
     statesActor!s"Update $filename 90"
     Hdfs.del(filename)
