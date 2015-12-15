@@ -22,8 +22,8 @@ object MachineLearning {
 
   def createModel(hdfsTrainingData:String,numIteration:Int,hdfsmodelName:String): Unit ={
     val runCmd = cmd + s"Create $hdfsTrainingData $hdfsmodelName $numIteration"
-    println(runCmd)
     runCmd.!
+    println(runCmd)
   }
 
   def predict(modelName:String,hdfsTargetData:String,hdfsresultPath:String): Unit ={
