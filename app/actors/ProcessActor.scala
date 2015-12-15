@@ -19,7 +19,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
   }
   def receive={
     case messages("Start",trainingfile,targetfile,_*)=>process(trainingfile,targetfile)
-    case messages("Create",localfile,numberIteration,modelName,_*)=>create(localfile,numberIteration,modelName)
+    case messages("Create",localfile,numberIteration,modelName,description,_*)=>create(localfile,numberIteration,modelName)
     case messages("Predict",localfile,metric,_*)=>predict(localfile,metric)
   }
 
