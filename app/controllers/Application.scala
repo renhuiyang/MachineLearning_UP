@@ -58,6 +58,7 @@ class Application extends Controller {
 
   def download(result:String)=Action{
     Hdfs.get(s"result/$result/part-00000",s"/tmp/Download/$result")
+    Hdfs.del(s"result/$result")
     Ok.sendFile(
       content = new java.io.File(s"/tmp/Download/$result"),
       fileName = _ => result
