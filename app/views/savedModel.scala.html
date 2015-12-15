@@ -40,8 +40,8 @@
                             <tbody>
                             <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
                                 <td>{{$index}}</td>
+                                <td>{{m.split('/').pop()}}</td>
                                 <td>{{m}}</td>
-                                <td>test</td>
                             </tr>
                             </tbody>
                         </table>
