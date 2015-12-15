@@ -97,7 +97,9 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                        }
                    )
                    .error(function(data,status){
-                       poll()
+                       //poll()
+                       $('#myPleaseWait').modal('hide');
+                       $scope.show = true
                    })
              }
          ,1000)
