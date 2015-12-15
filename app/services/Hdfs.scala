@@ -53,7 +53,8 @@ object Hdfs{
 
   def del(filePath:String):Boolean={
     val path = new Path(filePath)
-    fileSystem.deleteOnExit(path)
+    //fileSystem.deleteOnExit(path)
+    fileSystem.delete(path,true)
   }
 
   private def read(filePath:String):InputStream={

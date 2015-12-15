@@ -128,4 +128,14 @@ object RawDataTransfer {
     }
     testWriter.close
   }
+
+  def zipResult(rawTargetData:String,result:String,targetResult:String): Unit ={
+    val source = Source.fromFile(rawTargetData).getLines()
+    val target = Source.fromFile(result).getLines()
+    val targetWriter = new PrintWriter(new File(targetResult))
+    for((s,t)<-source.zip(target)){
+      targetWriter.write(s"$s,$t\n")
+    }
+    targetWriter.close
+  }
 }

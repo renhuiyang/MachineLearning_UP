@@ -68,8 +68,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     val modelName:String = s"$hdfsMasterUrl/model/$metric"
     val hdfsTargetData:String = s"$hdfsMasterUrl/$filename"
     val hdfsresultPath:String = s"$hdfsMasterUrl/result/$filename"
-    val hdfsProcessTargetData:String = s"$hdfsMasterUrl/processed_$filename"
-    MachineLearning.predict(modelName,hdfsTargetData,hdfsresultPath,hdfsProcessTargetData)
+    MachineLearning.predict(modelName,hdfsTargetData,hdfsresultPath)
     statesActor!s"Update $filename 80"
     Hdfs.del(filename)
     Hdfs.del(s"processed_$filename")
