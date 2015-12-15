@@ -3,8 +3,6 @@
 <link rel="stylesheet" href="@routes.Assets.versioned("static/bootstrap/css/bootstrap.min.css")">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <html>
-<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 @include.header()
 <style>
     .selected {
@@ -44,7 +42,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="btn-group">
-                            <a href="uploadTarget?model={{selectedModel}}"class="btn btn-primary">使用模型</a>
+                            <a href="uploadTarget?model={{selectedModel}}"class="btn btn-primary" ng-disabled="selected">使用模型</a>
                             <a href="createModel" class="btn btn-primary">创建模型</a>
                         </div>
                     </div>
@@ -80,6 +78,7 @@
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
   $scope.count = "0"
+  $scope.selected = true;
   //$scope.show = false
   $('#myPleaseWait').modal('show');
   var poll = function(){
@@ -109,6 +108,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
      $scope.selectedRow=null;
      $scope.setClickedRow = function(index){
          $scope.selectedRow = index;
+         $scope.selected = false;
          var model = $scope.models[index]
          $scope.selectedModel = model.split('/').pop();
          console.log("Model:"+$scope.selectedModel)

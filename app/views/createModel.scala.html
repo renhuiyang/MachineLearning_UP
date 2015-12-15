@@ -1,10 +1,6 @@
 @()
 <!DOCTYPE html>
 <html>
-<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
-<script src="@routes.Assets.versioned("static/plugins/bootstrap-filestyle-1.2.1/js/bootstrap-filestyle.js")"></script>
 @include.header()
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -38,6 +34,10 @@
 
 
 </div><!-- ./wrapper -->
+<script src="@routes.Assets.versioned("static/plugins/jQuery/jQuery-2.1.4.min.js")"></script>
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
+<script src="@routes.Assets.versioned("static/plugins/angularjs/angular.min.js")"></script>
+<script src="@routes.Assets.versioned("static/plugins/bootstrap-filestyle-1.2.1/js/bootstrap-filestyle.js")"></script>
 @include.js()
 </body>
 </html>
