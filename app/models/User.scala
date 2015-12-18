@@ -50,11 +50,11 @@ object Users {
   }
 
   def delete(id:Long):Future[Int]={
-    dbConfig.db.run(users.filter(_.id==id).delete)
+    dbConfig.db.run(users.filter(_.id===id).delete)
   }
 
   def get(id:Long):Future[Option[User]]={
-    dbConfig.db.run(users.filter(_.id==id).result.heapOption)
+    dbConfig.db.run(users.filter(_.id===id).result.headOption)
   }
 
   def listAll:Future[Seq[User]]={
