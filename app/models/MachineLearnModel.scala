@@ -37,7 +37,7 @@ class MachineLearnModelTableDef(tag:Tag)extends Table[MachineLearnModel](tag,"Ma
 object MachineLearnModels{
   val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
-  val ms = TableQuery[MachineLearnModel]
+  val ms = TableQuery[MachineLearnModelTableDef]
 
   def add(m:MachineLearnModel):Future[String]={
     dbConfig.db.run(ms += m).map{res=>"Model add successful!"}.recover{
