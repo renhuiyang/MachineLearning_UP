@@ -3,7 +3,7 @@
 # --- !Ups
 create table `MachineLearnModel` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR NOT NULL PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
   `sourceData` TEXT NOT NULL,
   `description` TEXT NOT NULL
 )
