@@ -19,6 +19,10 @@ GET     /showModels                       controllers.Application.showModels
 GET     /showResults                      controllers.Application.showResults
 GET     /removeModel                      controllers.Application.removeModel(model:String)
 
+GET     /test/userList                    controllers.DbAppController.userList
+POST    /test/addUser                     controllers.DbAppController.addUser
+GET     /test/deleteUser                  controllers.DbAppController.deleteUser(id:Long)
+
 #static view
 
 # Map static resources from the /public folder to the /assets URL path

@@ -122,6 +122,7 @@ class Application extends Controller {
 
   def removeModel(model:String) = Action{
     Hdfs.del(s"model/$model")
+    Hdfs.del("model/"+model+"_description")
     Ok(views.html.savedModel())
   }
 }
