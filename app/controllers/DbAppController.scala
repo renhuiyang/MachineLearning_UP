@@ -5,6 +5,7 @@ import play.api.mvc._
 import services.UserService
 import scala.concurrent.Future
 import models.{User,Users}
+import scala.concurrent.ExecutionContext.Implicits.global
 /**
   * Created by yangrenhui on 15-12-17.
   */
