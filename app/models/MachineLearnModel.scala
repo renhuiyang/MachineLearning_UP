@@ -46,11 +46,11 @@ object MachineLearnModels{
   }
 
   def delete(name:String):Future[Int]={
-    dbConfig.db.run(ms.filter(_.name==name).delete)
+    dbConfig.db.run(ms.filter(_.name===name).delete)
   }
 
   def get(name:String):Future[Option[MachineLearnModel]]={
-    dbConfig.db.run(ms.filter(_.name==name).result.headOption)
+    dbConfig.db.run(ms.filter(_.name===name).result.headOption)
   }
 
   def listAll():Future[Seq[MachineLearnModel]]={
