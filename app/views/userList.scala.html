@@ -1,7 +1,7 @@
 @(userForm: Form[models.UserFormData],users : Seq[models.User])(implicit request: RequestHeader)
 @main() {
 
-<form id="user-data-form" role="form" action='@routes.ApplicationController.addUser()' method="post" class="form-horizontal" align="center" autocomplete="off">
+<form id="user-data-form" role="form" action='@routes.DbAppController.addUser()' method="post" class="form-horizontal" align="center" autocomplete="off">
 
     <fieldset class="user-fieldset">
 
@@ -125,7 +125,7 @@
                 <td>@user.lastName</td>
                 <td>@user.mobile</td>
                 <td>@user.email</td>
-                <td><a href="@routes.ApplicationController.deleteUser(user.id)">delete</a></td>
+                <td><a href="@routes.DbAppController.deleteUser(user.id)">delete</a></td>
             </tr>
             }
         </table>
