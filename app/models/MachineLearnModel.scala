@@ -26,12 +26,13 @@ object MachineLearnModelForm {
 }
 
 class MachineLearnModelTableDef(tag:Tag)extends Table[MachineLearnModel](tag,"MachineLearnModel"){
-  def id = column[Long]("id",O.AutoInc)
-  def name = column[String]("name",O.PrimaryKey)
+  def id = column[Long]("id",O.AutoInc,O.PrimaryKey)
+  def name = column[String]("name")
   def sourceData = column[String]("sourceData")
   def description = column[String]("description")
 
   override def * = (id,name,sourceData,description) <> (MachineLearnModel.tupled,MachineLearnModel.unapply)
+  def idx =  index("idx_a", name, unique = true)
 }
 
 object MachineLearnModels{
