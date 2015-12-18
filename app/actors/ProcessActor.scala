@@ -53,6 +53,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
     statesActor!s"Update $filename 90"
     Hdfs.del(filename)
+    Hdfs.get(modelName+"_description",s"/tmp/Metric/$modelName"+"_description")
     statesActor!s"Update $filename 100"
   }
 
