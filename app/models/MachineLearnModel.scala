@@ -42,7 +42,7 @@ class MachineLearnModelTableDef(tag:Tag)extends Table[MachineLearnModel](tag,"Ma
   def sourceData = column[String]("sourceData")
   def description = column[String]("description")
 
-  override def * = (id,name,sourceData,description) <> (MachineLearnModel.tupled,MachineLearnModel.unapply)
+  override def * = (id,name,sourceData,description) <> ((MachineLearnModel.apply _).tupled, MachineLearnModel.unapply)
   def idx =  index("idx_a", name, unique = true)
 }
 
