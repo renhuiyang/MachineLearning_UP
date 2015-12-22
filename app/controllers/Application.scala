@@ -9,7 +9,7 @@ import com.typesafe.config.ConfigFactory
 import models.{MachineLearnModel, MachineLearnModels}
 import play.api._
 import play.api.libs.concurrent.Akka
-import play.api.libs.json.Json
+import play.api.libs.json.{JsString, Json}
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -46,7 +46,7 @@ class Application extends Controller {
     implicit val _timeout = Timeout(3, TimeUnit.SECONDS)
     if (qtype == "result" && new java.io.File(s"/tmp/Download/$id").exists) {
       Future {
-        Ok(Json.obj("percentage" -> "100", "result" -> id))
+        Ok(Json.obj("percentage" -> "100", "results" -> [JsString(id)]))
       }
     }
     else if (qtype == "model") {
