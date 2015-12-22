@@ -87,7 +87,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
   var poll = function(){
      $timeout(
          function(){
-             console.log("call..."+$scope.count)
+             console.log("call @taskname..."+$scope.count)
              $http.get("/query?qtype=model&id="+"@taskname").success(
                        function(data){
                            $scope.count = data.percentage;
