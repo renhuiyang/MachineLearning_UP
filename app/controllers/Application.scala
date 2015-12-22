@@ -46,10 +46,17 @@ class Application extends Controller {
     implicit val _timeout = Timeout(3, TimeUnit.SECONDS)
     (statesActor ? s"Query $id").mapTo[String].flatMap { percentage =>
       if (percentage == "100") {
-        MachineLearnModels.listAll.map { arrays => {
-          Ok(Json.obj("percentage" -> percentage,"modals"->Json.toJson(arrays)))
+        if(qtype == "model"){
+          MachineLearnModels.listAll.map { arrays => {
+            Ok(Json.obj("percentage" -> percentage,"modals"->Json.toJson(arrays)))
+          }
+          }
+        }else{
+          Future{
+            Ok(Json.obj("percentage" -> percentage,"results"->id))
+          }
         }
-        }
+
       } else {
         Future {
           Ok(Json.obj("percentage" -> percentage))
