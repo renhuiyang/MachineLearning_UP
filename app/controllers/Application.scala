@@ -69,7 +69,7 @@ class Application extends Controller {
             Hdfs.del(s"result/$id")
             RawDataTransfer.zipResult(s"/tmp/Upload/$id",s"/tmp/Download/raw_$id",s"/tmp/Download/$id")
             new java.io.File(s"/tmp/Download/raw_$id").delete
-            Ok(Json.obj("percentage" -> percentage,"results"->JsArray(Seq(JsString(id)))))))
+            Ok(Json.obj("percentage" -> percentage,"results"->JsArray(Seq(JsString(id)))))
           }
         }
       } else {
