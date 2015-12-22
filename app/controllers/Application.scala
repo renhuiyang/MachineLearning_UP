@@ -6,6 +6,7 @@ import actors.{StatesActor, ProcessActor}
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
+import models.MachineLearnModels
 import play.api._
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json
@@ -41,17 +42,18 @@ class Application extends Controller {
     Ok(views.html.index())
   }
 
-  def query(id:String,qtype:String) = Action.async{
-    implicit val _timeout = Timeout(3,TimeUnit.SECONDS)
-    (statesActor?s"Query $id").mapTo[String].flatMap{percentage=>
-      if(percentage=="100"){
-        Future{Hdfs.list(qtype)}.map{arrays=>
-        {
-          Ok(Json.obj("percentage"->percentage,"models"->Json.toJson(arrays)))
+  def query(id: String, qtype: String) = Action.async {
+    implicit val _timeout = Timeout(3, TimeUnit.SECONDS)
+    (statesActor ? s"Query $id").mapTo[String].flatMap { percentage =>
+      if (percentage == "100") {
+        MachineLearnModels.listAll.map { arrays => {
+          Ok(Json.obj("percentage" -> percentage,"modals"->Json.toJson(arrays)))
         }
         }
-      }else{
-        Future{Ok(Json.obj("percentage"->percentage))}
+      } else {
+        Future {
+          Ok(Json.obj("percentage" -> percentage))
+        }
       }
     }
   }
@@ -70,10 +72,9 @@ class Application extends Controller {
   }
 
   def showModels = Action.async {
-    Future {
-      Hdfs.list("model")
-    }.map { arrays => {
-      Ok(Json.obj("models" -> Json.toJson(arrays)))
+      //Hdfs.list("model")
+      MachineLearnModels.listAll.map { arrays => {
+      Ok(Json.toJson(arrays))
     }
     }
   }
@@ -95,9 +96,10 @@ class Application extends Controller {
     Ok(views.html.createModel())
   }
 
-  def create = Action(parse.multipartFormData) { request =>
+  def create = Action(parse.multipartFormData) { implicit request =>
     val numIteration = request.body.dataParts.get("numIteration").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
     val modelName = request.body.dataParts.get("model").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
+    //val description = request.body.dataParts.get("dscription").getOrElse(Seq.empty[String]).lift(0).getOrElse("None")
     val picture = request.body.file("TrainingData").get
     //import java.io.File
     val filename = picture.filename

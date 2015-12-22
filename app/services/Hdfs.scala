@@ -57,7 +57,7 @@ object Hdfs{
     fileSystem.delete(path,true)
   }
 
-  private def read(filePath:String):InputStream={
+  def read(filePath:String):InputStream={
     val path = new Path(filePath)
     fileSystem.open(path)
   }

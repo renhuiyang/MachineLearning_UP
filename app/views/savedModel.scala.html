@@ -34,14 +34,16 @@
                             <tr>
                                 <th>Index</th>
                                 <th>Name</th>
+                                <th>Source</th>
                                 <th>Description</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models" ng-class="{'selected':$index==selectedRow}" ng-click="setClickedRow($index)">
-                                <td>{{$index}}</td>
-                                <td>{{m.split('/').pop()}}</td>
-                                <td>{{m}}</td>
+                                <td>{{m.id}}</td>
+                                <td>{{m.name}}</td>
+                                <td>{{m.sourcedata}}</td>
+                                <td>{{m.description}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -60,13 +62,13 @@
 var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope,$timeout,$http) {
   $scope.selected = true;
-  $http.get("/showModels").success(function(data){$scope.models = data.models})
+  $http.get("/showModels").success(function(data){$scope.models = data})
   $scope.selectedRow=null;
   $scope.setClickedRow = function(index){
          $scope.selectedRow = index;
          $scope.selected = false;
          var model = $scope.models[index]
-         $scope.selectedModel = model.split('/').pop();
+         $scope.selectedModel = model.name;
          console.log("Model:"+$scope.selectedModel)
   }
 });

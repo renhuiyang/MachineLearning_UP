@@ -2,6 +2,7 @@ package actors
 
 import akka.actor.{ActorRef, Actor}
 import com.typesafe.config.ConfigFactory
+import models.{MachineLearnModel, MachineLearnModels}
 import services.{MachineLearning, Hdfs, RawDataTransfer}
 
 /**
@@ -53,7 +54,10 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     MachineLearning.createModel(hdfsTrainingData,numIteration,hdfsmodelName)
     statesActor!s"Update $filename 90"
     Hdfs.del(filename)
-    Hdfs.get(modelName+"_description",s"/tmp/Metric/$modelName"+"_description")
+    val is = Hdfs.read(modelName+"_description")
+    MachineLearnModels.add(MachineLearnModel(0,modelName,filename,scala.io.Source.fromInputStream(is).getLines.mkString("\n")))
+    is.close
+    Hdfs.del(modelName+"_description")
     statesActor!s"Update $filename 100"
   }
 
