@@ -57,7 +57,7 @@ class ProcessActor(statesActor:ActorRef) extends Actor{
     val is = Hdfs.read(s"model/$modelName"+"_description")
     MachineLearnModels.add(MachineLearnModel(0,modelName,filename,scala.io.Source.fromInputStream(is).getLines.mkString("\n")))
     is.close
-    Hdfs.del(s"model/$modelName"+"_description")//model/111_description
+    Hdfs.del(s"model/$modelName"+"_description/part-00000")
     statesActor!s"Update $filename 100"
   }
 
