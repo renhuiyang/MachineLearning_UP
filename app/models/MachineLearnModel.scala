@@ -28,12 +28,13 @@ object MachineLearnModelForm {
   )
 }
 
-implicit val MachineLearnModelWrites: Writes[MachineLearnModel] = (
-(JsPath \ "id").write[Long] and
-(JsPath \ "name").write[String] and
-(JsPath \ "sourcedata").write[String] and
-(JsPath \ "description").write[String]
-) (unlift (MachineLearnModel.unapply) )
+object MachineLearnModel{
+  implicit val MachineLearnModelWrites:Writes[MachineLearnModel]=(
+    (JsPath \ "id").write[Long] and
+    (JsPath \ "name").write[String] and
+    (JsPath \ "sourcedata").write[String] and
+    (JsPath \ "description").write[String])(unlift(MachineLearnModel.unapply))
+}
 
 class MachineLearnModelTableDef(tag:Tag)extends Table[MachineLearnModel](tag,"MachineLearnModel"){
   def id = column[Long]("id",O.AutoInc,O.PrimaryKey)
