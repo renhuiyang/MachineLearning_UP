@@ -8,6 +8,9 @@ import scala.concurrent.Future
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
 import scala.concurrent.ExecutionContext.Implicits.global
+
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 /**
   * Created by yangrenhui on 15-12-18.
   */
@@ -24,6 +27,13 @@ object MachineLearnModelForm {
     )(MachineLearnModelFormData.apply)(MachineLearnModelFormData.unapply)
   )
 }
+
+implicit val MachineLearnModelWrites: Writes[MachineLearnModel] = (
+(JsPath \ "id").write[Long] and
+(JsPath \ "name").write[String] and
+(JsPath \ "sourcedata").write[String] and
+(JsPath \ "description").write[String]
+) (unlift (MachineLearnModel.unapply) )
 
 class MachineLearnModelTableDef(tag:Tag)extends Table[MachineLearnModel](tag,"MachineLearnModel"){
   def id = column[Long]("id",O.AutoInc,O.PrimaryKey)
