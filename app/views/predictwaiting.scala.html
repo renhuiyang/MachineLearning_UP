@@ -92,6 +92,7 @@ app.controller('customersCtrl', function($scope,$timeout,$http) {
                            {
                                $('#myPleaseWait').modal('hide');
                                $scope.show = true
+                               console.log("result:"+data.results)
                                $scope.models = data.results
                            }
                        }
