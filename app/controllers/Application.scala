@@ -6,7 +6,7 @@ import actors.{StatesActor, ProcessActor}
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import models.MachineLearnModels
+import models.{MachineLearnModel, MachineLearnModels}
 import play.api._
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json
@@ -44,6 +44,18 @@ class Application extends Controller {
 
   def query(id: String, qtype: String) = Action.async {
     implicit val _timeout = Timeout(3, TimeUnit.SECONDS)
+    if (qtype == "result" && new java.io.File(s"/tmp/Download/$id").exists) {
+      Future {
+        Ok(Json.obj("percentage" -> "100", "result" -> id))
+      }
+    }
+    else if (qtype == "model") {
+      MachineLearnModels.listAll.map(seq => {
+        if (seq.contains(id)) {
+          Ok(Json.obj("percentage" -> "100", "modals" -> Json.toJson(seq)))
+        }
+      })
+    }
     (statesActor ? s"Query $id").mapTo[String].flatMap { percentage =>
       if (percentage == "100") {
         if(qtype == "model"){
@@ -53,10 +65,13 @@ class Application extends Controller {
           }
         }else{
           Future{
+            Hdfs.get(s"result/$id/part-00000",s"/tmp/Download/raw_$id")
+            Hdfs.del(s"result/$id")
+            RawDataTransfer.zipResult(s"/tmp/Upload/$id",s"/tmp/Download/raw_$id",s"/tmp/Download/$id")
+            new java.io.File(s"/tmp/Download/raw_$id").delete
             Ok(Json.obj("percentage" -> percentage,"result"->id))
           }
         }
-
       } else {
         Future {
           Ok(Json.obj("percentage" -> percentage))

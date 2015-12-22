@@ -15,7 +15,14 @@ import play.api.libs.functional.syntax._
   * Created by yangrenhui on 15-12-18.
   */
 
-case class MachineLearnModel(id:Long,name:String,sourceData:String,description:String)
+case class MachineLearnModel(id:Long,name:String,sourceData:String,description:String){
+  override def equals(o:Any)=o match{
+    case that:MachineLearnModel => that.id == id
+    case thatname:String => thatname == name
+  }
+
+  override def hashCode = name.toUpperCase.hashCode()
+}
 case class MachineLearnModelFormData(name:String,sourceData:String,description:String)
 
 object MachineLearnModelForm {
